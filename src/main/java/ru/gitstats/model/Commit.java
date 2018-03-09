@@ -1,31 +1,32 @@
 package ru.gitstats.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.Date;
 
 @Entity
-@Table(name = "users")
+@Table(name = "commits")
 @Getter
 @Setter
 @EqualsAndHashCode
-public class User {
+public class Commit {
 
     @Id
     @Column(name = "ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "NAME", nullable = false)
-    private String name;
-
     @Column(name = "EMAIL", nullable = false)
     private String email;
+
+    @Column(name = "DATE", columnDefinition = "DATETIME", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+
 
 //    @OneToMany(cascade = CascadeType.ALL)
 //    @JoinTable(name = "stats", joinColumns = {
