@@ -7,6 +7,7 @@ th {
     color: #039;
     padding: 8px;
 }
+
 td {
     background: #e8edff;
     border-bottom: 1px solid #fff;
@@ -14,4 +15,40 @@ td {
     border-top: 1px solid transparent;
     padding: 8px;
 }
-tr:hover td {background: #ccddff;}
+
+tr:hover td {
+    background: #ccddff;
+}
+
+clear-fix::after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0px;
+    width: 50%;
+    visibility: hidden;
+}
+
+.row {
+    margin: 0 -10px;
+    margin-bottom: 10px;
+}
+
+.row:last-child {
+    margin-bottom: 0;
+}
+
+[class*="col-"] {
+    padding: 10px;
+}
+
+.row {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+
+[class*="col-"] {
+    display: table-cell;
+}
+

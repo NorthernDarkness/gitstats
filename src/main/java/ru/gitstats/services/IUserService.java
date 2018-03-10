@@ -6,7 +6,7 @@ import ru.gitstats.model.User;
 import java.util.List;
 
 public interface IUserService {
-    List<Commit> loadAll();
+    List<User> loadAll();
 
-    void addCommit(Commit commit);
+    void addUser(User user);
 }

@@ -63,6 +63,7 @@ public class ApplicationStartup
 //        Map<String, String> userEmails = new HashMap<>();
         Set<User> users = new HashSet();
         Set<Commit> commits = new HashSet();
+        walk.setRevFilter(RevFilter.NO_MERGES);
         for (RevCommit commit : walk) {
 //            userEmails.put(commit.getAuthorIdent().getEmailAddress(), commit.getAuthorIdent().getName());
             System.out.println(String.join(", ", commit.getAuthorIdent().getName(),
@@ -74,11 +75,13 @@ public class ApplicationStartup
             Commit commitEntity = new Commit();
             commitEntity.setEmail(commit.getAuthorIdent().getEmailAddress());
             commitEntity.setDate(commit.getAuthorIdent().getWhen());
+            commitEntity.setMessage(commit.getName());
             commits.add(commitEntity);
         }
         walk.close();
         userRepository.save(users);
         commitRepository.save(commits);
+        commitRepository.findAllCountGroupByEmail();
         return;
     }
 

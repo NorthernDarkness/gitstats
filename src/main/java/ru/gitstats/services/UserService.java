@@ -15,10 +15,11 @@ public class UserService implements IUserService {
     private UserRepository userRepository;
 
     @Override
-    public List<Commit> loadAll() {
+    public List<User> loadAll() {
 
         return userRepository.findAll();
     }
+
 
     @Override
     public void addUser(User user) {

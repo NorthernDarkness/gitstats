@@ -27,6 +27,9 @@ public class Commit {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
+    @Column(name = "MESSAGE", nullable = false)
+    private String message;
+
 
 //    @OneToMany(cascade = CascadeType.ALL)
 //    @JoinTable(name = "stats", joinColumns = {

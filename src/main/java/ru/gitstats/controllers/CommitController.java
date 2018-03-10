@@ -7,14 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import ru.gitstats.model.Commit;
+import org.springframework.web.bind.annotation.ResponseBody;
+import ru.gitstats.business.model.CommitsModel;
 import ru.gitstats.services.CommitService;
-import ru.gitstats.services.UserService;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(value = "/commits")
 public class CommitController {
 
@@ -23,9 +22,21 @@ public class CommitController {
     @Autowired
     private CommitService commitService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<Commit> getContactService() {
-        return commitService.getCommitNumber();
+    @RequestMapping(value = "all", method = RequestMethod.GET)
+    public String getContactService(Model model) {
+        model.addAttribute("averageCommitsModels", commitService.getAverageCommitsModel());
+        model.addAttribute("avgCol1", "email");
+        model.addAttribute("avgCol2", "average number of commits per month");
+        model.addAttribute("commitsModels", commitService.getCommitsModel());
+        model.addAttribute("column1", "email");
+        model.addAttribute("column2", "commit number");
+        return "Commits";
+    }
+
+    @RequestMapping(value = "api", method = RequestMethod.GET)
+    public @ResponseBody
+    List<CommitsModel> getCommitsByEmail () {
+        return commitService.getCommitsModel();
     }
 
 
