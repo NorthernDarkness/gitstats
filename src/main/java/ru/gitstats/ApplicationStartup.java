@@ -30,7 +30,6 @@ import ru.gitstats.repository.FileRepository;
 import ru.gitstats.repository.UserRepository;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,7 +56,8 @@ public class ApplicationStartup
 
         Git git = null;
         try {
-            git = Git.open(new java.io.File("F:\\Jproj\\testNg\\.git"));
+//            git = Git.open(new java.io.File("F:\\Jproj\\testNg\\.git"));
+            git = Git.open(new java.io.File("C:\\Users\\Scrin\\Desktop\\gitstats\\.git"));
         } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -78,7 +78,7 @@ public class ApplicationStartup
             System.out.println(String.join(", ", commit.getAuthorIdent().getName(),
                     commit.getAuthorIdent().getEmailAddress(), String.valueOf(commit.getAuthorIdent().getWhen())));
             Set<Change> changes = fetchChanges(repository, commit);
-            dumpIntoDb(users, commits, commit, changes);
+            prepareCommitsEntities(users, commits, commit, changes);
         }
         walk.close();
         userRepository.save(users);
@@ -132,7 +132,7 @@ public class ApplicationStartup
         return changes;
     }
 
-    private void dumpIntoDb(Set<User> users, Set<Commit> commits, RevCommit commit, Set<Change> changes) {
+    private void prepareCommitsEntities(Set<User> users, Set<Commit> commits, RevCommit commit, Set<Change> changes) {
         User user = new User();
         user.setName(commit.getAuthorIdent().getName());
         user.setEmail(commit.getAuthorIdent().getEmailAddress());
@@ -142,6 +142,7 @@ public class ApplicationStartup
         commitEntity.setDate(commit.getAuthorIdent().getWhen());
         commitEntity.setMessage(commit.getName());
         commitEntity.setChanges(changes);
+        changes.stream().forEach(c -> c.setCommit());
         commits.add(commitEntity);
     }
 
