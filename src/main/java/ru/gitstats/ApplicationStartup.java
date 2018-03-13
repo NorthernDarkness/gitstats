@@ -57,7 +57,9 @@ public class ApplicationStartup
         Git git = null;
         try {
 //            git = Git.open(new java.io.File("F:\\Jproj\\testNg\\.git"));
-            git = Git.open(new java.io.File("C:\\Users\\Scrin\\Desktop\\gitstats\\.git"));
+
+//                    git = Git.open(new java.io.File("C:\\Users\\Scrin\\Desktop\\gitstats\\.git"));
+            git = Git.open(new java.io.File("D:\\JavaProj\\gitstats\\.git"));
         } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -119,10 +121,11 @@ public class ApplicationStartup
                 linesAdded += edit.getEndB() - edit.getBeginB();
             }
             Change change = new Change();
-            change.setLinesAdded(linesAdded);
-            change.setLinesDeleted(linesDeleted);
             File file = new File();
             file.setPath(path);
+            change.setLinesAdded(linesAdded);
+            change.setLinesDeleted(linesDeleted);
+            file.setChanges(changes);
             fileRepository.save(file);
             Set<File> files = new HashSet();
             files.add(file);
@@ -142,7 +145,7 @@ public class ApplicationStartup
         commitEntity.setDate(commit.getAuthorIdent().getWhen());
         commitEntity.setMessage(commit.getName());
         commitEntity.setChanges(changes);
-        changes.stream().forEach(c -> c.setCommit());
+        changes.stream().forEach(c -> c.setCommit(commitEntity));
         commits.add(commitEntity);
     }
 

@@ -13,7 +13,6 @@ import java.util.Set;
 @Table(name = "commits")
 @Getter
 @Setter
-@EqualsAndHashCode
 public class Commit {
 
     @Id
@@ -35,4 +34,25 @@ public class Commit {
             mappedBy = "commit")
     private Set<Change> changes;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Commit commit = (Commit) o;
+
+        if (id != commit.id) return false;
+        if (email != null ? !email.equals(commit.email) : commit.email != null) return false;
+        if (date != null ? !date.equals(commit.date) : commit.date != null) return false;
+        return message != null ? message.equals(commit.message) : commit.message == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (message != null ? message.hashCode() : 0);
+        return result;
+    }
 }
