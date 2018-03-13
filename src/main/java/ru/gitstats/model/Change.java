@@ -26,7 +26,7 @@ public class Change {
     @Column(name = "LINES_DELETED", nullable = false)
     private long linesDeleted;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "files_changes", joinColumns = {
             @JoinColumn(name = "CHANGE_ID", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "FILE_ID",

@@ -18,7 +18,7 @@ public class Commit {
     @Id
     @Column(name = "ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(name = "EMAIL", nullable = false)
     private String email;
@@ -42,17 +42,17 @@ public class Commit {
         Commit commit = (Commit) o;
 
         if (id != commit.id) return false;
-        if (email != null ? !email.equals(commit.email) : commit.email != null) return false;
-        if (date != null ? !date.equals(commit.date) : commit.date != null) return false;
-        return message != null ? message.equals(commit.message) : commit.message == null;
+        if (!email.equals(commit.email)) return false;
+        if (!date.equals(commit.date)) return false;
+        return message.equals(commit.message);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (message != null ? message.hashCode() : 0);
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + email.hashCode();
+        result = 31 * result + date.hashCode();
+        result = 31 * result + message.hashCode();
         return result;
     }
 }

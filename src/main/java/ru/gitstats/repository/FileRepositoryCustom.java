@@ -7,5 +7,7 @@ import ru.gitstats.model.File;
 
 public interface FileRepositoryCustom {
 
-    void saveIfNotExist(File path);
+    //    void saveIfNotExist(File path);
+    File save(File file);
 }
+

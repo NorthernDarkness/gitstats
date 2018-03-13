@@ -15,12 +15,17 @@ public class FileRepositoryImpl implements FileRepositoryCustom{
     @PersistenceContext
     EntityManager entityManager;
 
-    public void saveIfNotExist(File file){
-        Query query = entityManager.createNativeQuery("INSERT INTO files (PATH) " +
-                "    SELECT ? FROM dual" +
+    public File save(File file){
+        final Query query = entityManager.createNativeQuery("INSERT INTO files (PATH) " +
+                "    SELECT ?0 FROM dual" +
                 "        WHERE NOT EXISTS (SELECT * FROM files f" +
-                "                             WHERE f.PATH = ?)");
-        query.setParameter(1, file.getPath());
+                "                             WHERE f.PATH = ?0)");
+        query.setParameter(0, file.getPath());
         query.executeUpdate();
+        return file;
     }
+
+//    public void saveIfNotExist(File file){
+//
+//    }
 }

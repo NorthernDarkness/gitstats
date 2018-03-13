@@ -27,6 +27,7 @@ import ru.gitstats.model.File;
 import ru.gitstats.model.User;
 import ru.gitstats.repository.CommitRepository;
 import ru.gitstats.repository.FileRepository;
+import ru.gitstats.repository.FileRepositoryCustom;
 import ru.gitstats.repository.UserRepository;
 
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class ApplicationStartup
     private CommitRepository commitRepository;
 
     @Autowired
-    private FileRepository fileRepository;
+    private FileRepositoryCustom fileRepository;
 
     /**
      * This event is executed as late as conceivably possible to indicate that

@@ -18,7 +18,7 @@ public class File {
     @Id
     @Column(name = "ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(name = "PATH", nullable = false)
     private String path;
@@ -39,7 +39,7 @@ public class File {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + path.hashCode();
         return result;
     }
