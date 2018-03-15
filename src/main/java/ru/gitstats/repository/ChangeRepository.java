@@ -10,9 +10,9 @@ import ru.gitstats.model.Commit;
 import java.util.List;
 
 @Transactional
-public interface ChangeRepository extends JpaRepository<Change, Long> {
+public interface ChangeRepository extends JpaRepository<Change, Long>, ChangeRepositoryCustom {
 
-    @Query(value = "INSERT INTO changes (LINES_ADDED, LINES_DELETED, COMMIT_ID, FILE_ID) VALUES (?0 ,?1, ?3 , " +
-            "(SELECT ID FROM files WHERE PATH = ?4));", nativeQuery = true)
-    void insertIfFileNotExist(long linesAdded,long linesDeleted, long commitId, String path);
+//    @Query(value = "INSERT INTO changes (LINES_ADDED, LINES_DELETED, COMMIT_ID, FILE_ID) VALUES (?0 ,?1, ?3 , " +
+//            "(SELECT ID FROM files WHERE PATH = ?4));", nativeQuery = true)
+//    void insertIfFileNotExist(long linesAdded,long linesDeleted, long commitId, String path);
 }
