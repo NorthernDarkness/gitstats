@@ -24,8 +24,4 @@ public class FileRepositoryImpl implements FileRepositoryCustom{
         query.executeUpdate();
         return file;
     }
-
-//    public void saveIfNotExist(File file){
-//
-//    }
 }

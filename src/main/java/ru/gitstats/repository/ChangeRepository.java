@@ -7,10 +7,11 @@ import ru.gitstats.business.model.CommitsModel;
 import ru.gitstats.model.Change;
 import ru.gitstats.model.Commit;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Transactional
-public interface ChangeRepository extends JpaRepository<Change, Long>, ChangeRepositoryCustom {
+public interface ChangeRepository<T> extends JpaRepository<Change, Long>, ChangeRepositoryCustom {
 
 //    @Query(value = "INSERT INTO changes (LINES_ADDED, LINES_DELETED, COMMIT_ID, FILE_ID) VALUES (?0 ,?1, ?3 , " +
 //            "(SELECT ID FROM files WHERE PATH = ?4));", nativeQuery = true)

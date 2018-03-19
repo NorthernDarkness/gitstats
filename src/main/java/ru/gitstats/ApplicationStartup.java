@@ -12,6 +12,7 @@ import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.errors.StopWalkException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.DepthWalk;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevSort;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -29,6 +30,8 @@ import ru.gitstats.repository.CommitRepository;
 import ru.gitstats.repository.FileRepository;
 import ru.gitstats.repository.FileRepositoryCustom;
 import ru.gitstats.repository.UserRepository;
+import ru.gitstats.services.CommitService;
+import ru.gitstats.services.ICommitService;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -46,6 +49,9 @@ public class ApplicationStartup
     private CommitRepository commitRepository;
 
     @Autowired
+    private ICommitService commitService;
+
+    @Autowired
     private FileRepositoryCustom fileRepository;
 
     /**
@@ -59,10 +65,10 @@ public class ApplicationStartup
         try {
 //            git = Git.open(new java.io.File("F:\\Jproj\\testNg\\.git"));
 
-//                    git = Git.open(new java.io.File("C:\\Users\\Scrin\\Desktop\\gitstats\\.git"));
-            git = Git.open(new java.io.File("D:\\JavaProj\\gitstats\\.git"));
+                    git = Git.open(new java.io.File("C:\\Users\\Scrin\\Desktop\\gitstats\\.git"));
+//            git = Git.open(new java.io.File("D:\\JavaProj\\gitstats\\.git"));
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
+//             TODO Auto-generated catch block
             e1.printStackTrace();
         }
         Repository repository = git.getRepository();
@@ -85,7 +91,7 @@ public class ApplicationStartup
         }
         walk.close();
         userRepository.save(users);
-        commitRepository.save(commits);
+        commitService.save(commits);
         commitRepository.findAllCountGroupByEmail();
         return;
     }
@@ -100,8 +106,8 @@ public class ApplicationStartup
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        int linesDeleted = 0;
-        int linesAdded = 0;
+        long linesDeleted = 0;
+        long linesAdded = 0;
         String path = "";
         EditList editList = null;
         Set<Change> changes = new HashSet();
