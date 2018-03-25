@@ -16,23 +16,24 @@ import java.util.Set;
 public class Commit {
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "EMAIL", nullable = false)
-    private String email;
-
-    @Column(name = "DATE", columnDefinition = "DATETIME", nullable = false)
+    @Column(name = "date", columnDefinition = "DATETIME", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @Column(name = "MESSAGE", nullable = false)
+    @Column(name = "message", nullable = false)
     private String message;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
             mappedBy = "commit")
     private Set<Change> changes;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Override
     public boolean equals(Object o) {
@@ -42,7 +43,6 @@ public class Commit {
         Commit commit = (Commit) o;
 
         if (id != commit.id) return false;
-        if (!email.equals(commit.email)) return false;
         if (!date.equals(commit.date)) return false;
         return message.equals(commit.message);
     }
@@ -50,7 +50,6 @@ public class Commit {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + email.hashCode();
         result = 31 * result + date.hashCode();
         result = 31 * result + message.hashCode();
         return result;

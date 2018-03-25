@@ -16,46 +16,49 @@ import java.util.Set;
 public class Change {
 
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "LINES_ADDED", nullable = false)
+    @Column(name = "lines_added", nullable = false)
     private long linesAdded;
 
-    @Column(name = "LINES_DELETED", nullable = false)
+    @Column(name = "lines_deleted", nullable = false)
     private long linesDeleted;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "files_changes", joinColumns = {
-            @JoinColumn(name = "CHANGE_ID", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "FILE_ID",
-                    nullable = false, updatable = false) })
-    private Set<File> files;
+    @Column(name = "file", nullable = false)
+    private String file;
+
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(name = "files_changes", joinColumns = {
+//            @JoinColumn(name = "change_id", nullable = false, updatable = false) },
+//            inverseJoinColumns = { @JoinColumn(name = "file_id",
+//                    nullable = false, updatable = false) })
+//    private Set<File> files;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "COMMIT_ID", nullable = false)
+    @JoinColumn(name = "commit_id")
     private Commit commit;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
 
         Change change = (Change) o;
 
         if (id != change.id) return false;
         if (linesAdded != change.linesAdded) return false;
-        return linesDeleted == change.linesDeleted;
+        if (linesDeleted != change.linesDeleted) return false;
+        return file.equals(change.file);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (int) (id ^ (id >>> 32));
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (int) (linesAdded ^ (linesAdded >>> 32));
         result = 31 * result + (int) (linesDeleted ^ (linesDeleted >>> 32));
+        result = 31 * result + file.hashCode();
         return result;
     }
 }
