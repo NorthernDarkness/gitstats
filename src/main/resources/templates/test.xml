@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.ericsson.se/jcat/bsp/devices/properties"
+      xsi:schemaLocation="http://www.ericsson.se/jcat/bsp/devices/properties BridgeShell.xsd">
+    <Test>
+        <properties step="", hwsetuo="", shelf="">
+    </properties>
+    <properties step="", hwsetuo="", shelf="">
+</properties>
+        </Test>
+
+
+<prop shelf="0">
+<prop step="0">
+    <sdgdfgd>
+</prop>
+<prop step="0">
+    <sdgdfgd>
+</prop>
+</prop>
+<prop shelf="1">
+<sdgdfgd>
+</prop>
+        </root>

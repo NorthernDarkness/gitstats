@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.ericsson.se/jcat/bsp/devices/properties"
+      xsi:schemaLocation="http://www.ericsson.se/jcat/bsp/devices/properties BridgeShell.xsd">
+    <any_blade>
+        <command_module>bcm</command_module>
+        <command_module>shmc</command_module>
+        <command_module>pfmc</command_module>
+        <command_module>ironSide</command_module>
+        <command_module>eriIpmiTool</command_module>
+        <command_module>bladeIpmi</command_module>
+    </any_blade>
+    <blade>
+        <id_regexp>0-(0|25)</id_regexp>
+        <command_module>erlang</command_module>
+        <command_module>iss</command_module>
+        <command_module>cliss</command_module>
+        <command_module>dmxc</command_module>
+        <command_module>appc</command_module>
+    </blade>
+    <blade>
+        <id_regexp>[1-9]-(0|25)</id_regexp>
+        <command_module>iss</command_module>
+    </blade>
+    <blade>
+        <id_regexp>\\d-(26|28|4|6)</id_regexp>
+        <command_module>imish</command_module>
+    </blade>
+    <blade>
+        <id_regexp>25-(26|28)</id_regexp>
+        <command_module>fanc</command_module>
+    </blade>
+</root>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           targetNamespace="http://www.ericsson.se/jcat/bsp/devices/properties"
+           xmlns="http://www.ericsson.se/jcat/bsp/devices/properties"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.1"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element type="Root" name="root"/>
+
+    <xs:complexType name="Root">
+        <xs:sequence>
+            <xs:element name="any_blade" type="AnyBlade" maxOccurs="1"/>
+            <xs:element name="blade" type="Blade" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Blade">
+        <xs:sequence>
+            <xs:element name="id_regexp" type="xs:string"/>
+            <xs:element name="command_module" type="CommandModule" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AnyBlade">
+        <xs:sequence>
+            <xs:element name="command_module" type="CommandModule" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="CommandModule">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="bcm"/>
+            <xs:enumeration value="shmc"/>
+            <xs:enumeration value="pfmc"/>
+            <xs:enumeration value="ironSide"/>
+            <xs:enumeration value="eriIpmiTool"/>
+            <xs:enumeration value="bladeIpmi"/>
+            <xs:enumeration value="erlang"/>
+            <xs:enumeration value="iss"/>
+            <xs:enumeration value="cliss"/>
+            <xs:enumeration value="dmxc"/>
+            <xs:enumeration value="appc"/>
+            <xs:enumeration value="imish"/>
+            <xs:enumeration value="fanc"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
