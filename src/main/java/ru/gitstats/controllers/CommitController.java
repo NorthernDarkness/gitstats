@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import ru.gitstats.business.model.CommitsModel;
 import ru.gitstats.services.CommitService;
 
@@ -35,11 +36,17 @@ public class CommitController {
 
     @RequestMapping(value = "api", method = RequestMethod.GET)
     public @ResponseBody
-    List<CommitsModel> getCommitsByEmail () {
+    List<CommitsModel> getCommitsByEmail() {
         return commitService.getCommitsModel();
     }
 
-
+    @RequestMapping(value = "stat", method = RequestMethod.GET)
+    public ModelAndView getStatistic(Model model) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("model", commitService.getProjectModel());
+        mav.setViewName("/layout");
+        return mav;
+    }
 
 
 }

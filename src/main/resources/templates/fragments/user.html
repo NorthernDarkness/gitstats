@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<script type="text/javascript" th:fragment="script" th:inline="javascript">
+    google.load("visualization", "1", {packages: ['controls', 'corechart', 'table']});
+
+    function prepareData() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Attribute');
+        data.addColumn('string', 'Value');
+        data.addRows([
+            ['User name', '${model.name}'],
+            ['Email', '${model.email}'],
+            ['Total commit number', '${model.commitNumber?c}'],
+            ['Average commit number per month', '${model.averageCommitNumberPerMonth?c}'],
+            ['The most frequently changed file', '${model.mostChangableFile}'],
+            ['Total number of added lines', '${model.numberOfAddedLines?c}'],
+            ['Total number of removed lines', '${model.numberOfRemovedLines?c}'],
+        ]);
+        drawTableChart(data, 'Contributors list', 'chart_div');
+    }
+
+    google.charts.setOnLoadCallback(prepareData);
+</script>
+</body>
+</html>

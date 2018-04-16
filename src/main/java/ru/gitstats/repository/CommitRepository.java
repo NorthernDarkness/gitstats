@@ -3,10 +3,10 @@ package ru.gitstats.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
-import ru.gitstats.business.model.AverageCommitsPerMonthModel;
 import ru.gitstats.business.model.CommitsModel;
 import ru.gitstats.model.Commit;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Transactional
@@ -30,4 +30,28 @@ public interface CommitRepository extends JpaRepository<Commit, Long> {
             "ORDER BY r DESC", nativeQuery = true)
     List<Object[]> findAverageCountGroupByEmail();
 
+    @Query(value = "SELECT\n" +
+            "  d.count / (12 * (YEAR(d.max) - YEAR(d.min)) + (MONTH(d.max) - MONTH(d.min)))\n" +
+            "    AS r\n" +
+            "FROM\n" +
+            "  (SELECT\n" +
+            "     min(DATE) AS min,\n" +
+            "     max(DATE) AS max,\n" +
+            "     count(*)  AS count\n" +
+            "   FROM users u LEFT JOIN commits c ON u.id = c.user_id\n" +
+            "   WHERE u.id = ?1) AS d\n" +
+            "ORDER BY r DESC", nativeQuery = true)
+    BigDecimal findAverageCommits(long id);
+
+
+    @Query(value = "SELECT d.count / (12 * (YEAR(d.max) - YEAR(d.min)) + (MONTH(d.max) - MONTH(d.min))) avg\n" +
+            "FROM (SELECT\n" +
+            "        count(id)    count,\n" +
+            "        min(c1.date) min,\n" +
+            "        max(c1.date) max\n" +
+            "      FROM commits c1\n" +
+            "     ) d", nativeQuery = true)
+    long getAverageNumberOfCommitsPerMonth();
+
+    Long countByUser_Id(long id);
 }

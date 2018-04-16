@@ -19,7 +19,7 @@
         data.addColumn('string', 'Email}');
         data.addRows([
         <#list users as user>
-            ['${user.name}', '${user.email}'],
+            ['<a href="get/${user.id}">${user.name}</a>', '${user.email}'],
         </#list>]);
         drawTableChart(data, 'Contributors list', 'chart_div');
     }

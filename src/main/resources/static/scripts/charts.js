@@ -24,6 +24,7 @@ function drawTableChart(data, title, divName) {
     var options = {
         'title': title,
         'width': '100%',
+        'allowHtml': true,
         'height': data.getNumberOfRows() * 50
     };
 

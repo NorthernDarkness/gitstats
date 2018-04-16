@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<script type="text/javascript" th:fragment="script" th:inline="javascript">
+    google.load("visualization", "1", {packages: ['controls', 'corechart', 'table']});
+
+    function prepareData() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'User name');
+        data.addColumn('string', 'Email}');
+        data.addRows([
+                /*<![CDATA[*/
+
+                /* [# th:each = "user : ${users}"    ]*/
+                ['<a href="get/${user.id}">/*[[${user.name}]]*/</a>', ' /*[[${user.email}]]*/'],
+                /*[/]*/
+                /*]]>*/
+            ]
+        )
+        ;
+        drawTableChart(data, 'Contributors list', 'chart_div');
+    }
+
+    google.charts.setOnLoadCallback(prepareData);
+</script>
+</body>
+</html>

@@ -5,10 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gitstats.business.model.AverageCommitsPerMonthModel;
 import ru.gitstats.business.model.CommitsModel;
+import ru.gitstats.business.model.ProjectViewModel;
 import ru.gitstats.model.Change;
 import ru.gitstats.model.Commit;
 //import ru.gitstats.model.File;
 //import ru.gitstats.repository.ChangeRepositoryCustom;
+import ru.gitstats.repository.ChangeRepository;
 import ru.gitstats.repository.CommitRepository;
 //import ru.gitstats.repository.FileRepositoryCustom;
 import ru.gitstats.repository.UserRepository;
@@ -32,6 +34,9 @@ public class CommitService implements ICommitService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ChangeRepository changeRepository;
 
     public List<CommitsModel> getCommitsModel() {
         return commitRepository.findAllCountGroupByEmail();
@@ -71,5 +76,24 @@ public class CommitService implements ICommitService {
     @Override
     public void addUser(Commit user) {
 
+    }
+
+    public ProjectViewModel getProjectModel() {
+        ProjectViewModel projectViewModel = new ProjectViewModel();
+        List<Object[]> rowData = commitRepository.findAverageCountGroupByEmail();
+        for (Object[] r : rowData) {
+            final Double res = r[1] == null ? 0.0 : ((BigDecimal) r[1]).doubleValue();
+            projectViewModel.setName("project name");
+            projectViewModel.setNumberOfFiles(changeRepository.getNumberOfUniqueFiles());
+            projectViewModel.setNumberOfCommits(commitRepository.count());
+            projectViewModel.setNumberOfUsers(userRepository.count());
+            projectViewModel.setNumberOfAddedLines(changeRepository.getTitalNumberOfAddedLines());
+            projectViewModel.setNumberOfRemovedLines(changeRepository.getTitalNumberOfDeletedLines());
+            Object[] result = (Object[]) changeRepository.getMostFrequentlyChangedFile().get(0);
+            String g = result.getClass().getName();
+            projectViewModel.setMostChangableFile((String) result[0]);
+            projectViewModel.setAverageCommitNumberPerMonth(commitRepository.getAverageNumberOfCommitsPerMonth());
+        }
+        return projectViewModel;
     }
 }
