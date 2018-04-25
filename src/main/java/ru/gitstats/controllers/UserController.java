@@ -27,19 +27,19 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "get/{userId}", method = RequestMethod.GET)
-    public ModelAndView getContactService(ModelAndView model, @PathVariable long userId) {
-        ModelAndView mav = new ModelAndView();
+    public ModelAndView getContactService(ModelAndView mav, @PathVariable long userId) {
         mav.addObject("model", userService.getUserViewModel(userId));
-        mav.setViewName("/layout");
+        mav.setViewName("pages/user");
         return mav;
     }
 
+
+
+
     @RequestMapping(value = "getAll", method = RequestMethod.GET)
-    public ModelAndView getAll(ModelAndView model) {
-        ModelAndView mav = new ModelAndView();
+    public ModelAndView getAll(ModelAndView mav) {
         mav.addObject("users", userService.loadAll());
-        mav.addObject("script", "users");
-        mav.setViewName("/layout");
+        mav.setViewName("pages/users");
         return mav;
     }
 

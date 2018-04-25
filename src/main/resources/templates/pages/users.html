@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::script}, ~{::div})}">
 <body>
 <script type="text/javascript" th:fragment="script" th:inline="javascript">
     google.load("visualization", "1", {packages: ['controls', 'corechart', 'table']});
@@ -8,20 +9,21 @@
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'User name');
         data.addColumn('string', 'Email}');
-        data.addRows([
-                /*<![CDATA[*/
 
-                /* [# th:each = "user : ${users}"    ]*/
-                ['<a href="get/${user.id}">/*[[${user.name}]]*/</a>', ' /*[[${user.email}]]*/'],
-                /*[/]*/
-                /*]]>*/
-            ]
-        )
-        ;
+        /*<![CDATA[*/
+        /*[# th:each="user : ${users}"]*/
+        data.addRows([
+            ['<a href=\"get\\'+'[[${user.id}]]'+'\">'+'[[${user.name}]]'+'</a>', '[[${user.email}]]'],
+        ]);
+        /*[/]*/
+        /*]]>*/
         drawTableChart(data, 'Contributors list', 'chart_div');
     }
 
     google.charts.setOnLoadCallback(prepareData);
 </script>
+<div class="row">
+    <div class="col-6" id="chart_div"></div>
+</div>
 </body>
 </html>

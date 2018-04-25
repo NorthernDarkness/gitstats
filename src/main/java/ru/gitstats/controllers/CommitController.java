@@ -24,27 +24,27 @@ public class CommitController {
     private CommitService commitService;
 
     @RequestMapping(value = "all", method = RequestMethod.GET)
-    public String getContactService(Model model) {
-        model.addAttribute("averageCommitsModels", commitService.getAverageCommitsModel());
-        model.addAttribute("avgCol1", "email");
-        model.addAttribute("avgCol2", "average number of commits per month");
-        model.addAttribute("commitsModels", commitService.getCommitsModel());
-        model.addAttribute("column1", "email");
-        model.addAttribute("column2", "commit number");
-        return "Commits";
+    public ModelAndView getContactService(ModelAndView mav) {
+        mav.addObject("averageCommitsModels", commitService.getAverageCommitsModel());
+        mav.addObject("avgCol1", "email");
+        mav.addObject("avgCol2", "average number of commits per month");
+        mav.addObject("commitsModels", commitService.getCommitsModel());
+        mav.addObject("column1", "email");
+        mav.addObject("column2", "commit number");
+        mav.setViewName("pages/commits");
+        return mav;
     }
 
-    @RequestMapping(value = "api", method = RequestMethod.GET)
-    public @ResponseBody
-    List<CommitsModel> getCommitsByEmail() {
-        return commitService.getCommitsModel();
-    }
+//    @RequestMapping(value = "api", method = RequestMethod.GET)
+//    public @ResponseBody
+//    List<CommitsModel> getCommitsByEmail() {
+//        return commitService.getCommitsModel();
+//    }
 
     @RequestMapping(value = "stat", method = RequestMethod.GET)
-    public ModelAndView getStatistic(Model model) {
-        ModelAndView mav = new ModelAndView();
+    public ModelAndView getStatistic(ModelAndView mav) {
         mav.addObject("model", commitService.getProjectModel());
-        mav.setViewName("/layout");
+        mav.setViewName("pages/projects");
         return mav;
     }
 

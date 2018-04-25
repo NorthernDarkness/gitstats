@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.gitstats.business.model.AverageCommitsPerMonthModel;
 import ru.gitstats.business.model.UserViewModel;
 import ru.gitstats.controllers.UserController;
 import ru.gitstats.model.User;
@@ -12,8 +11,6 @@ import ru.gitstats.repository.CommitRepository;
 import ru.gitstats.repository.UserRepository;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +27,7 @@ public class UserService implements IUserService {
     @Override
     public List<User> loadAll() {
         return userRepository.findAll();
+
     }
 
     public UserViewModel getUserViewModel(long id) {

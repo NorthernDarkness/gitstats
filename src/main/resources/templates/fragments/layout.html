@@ -1,10 +1,9 @@
-<#import "spring.ftl" as spring />
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout (template, content)">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Dark Admin</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Git statistic</title>
 
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
@@ -13,7 +12,7 @@
     <script type="text/javascript" src="/scripts/charts.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
-          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
 </head>
 
 <body>
@@ -23,30 +22,10 @@
             data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false"
             aria-label="Toggle navigation">☰
     </button>
-    <a class="navbar-brand" href="#">Git statistic</a>
+    <a class="navbar-brand" href="#"
+       th:text="'Git statistic:' + ${#dates.format(#dates.createNow(), 'yyyy-MMM-dd')}"></a>
 
 </header>
-<script type="text/javascript">
-    google.load("visualization", "1", {packages: ['controls', 'corechart', 'table']});
-
-    function prepareData() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Attribute');
-        data.addColumn('string', 'Value');
-        data.addRows([
-            ['Total number of commits', '${model.numberOfCommits?c}'],
-            ['Total number of files', '${model.numberOfFiles?c}'],
-            ['Average number of commits per month', '${model.averageCommitNumberPerMonth?c}'],
-            ['Total number of users', '${model.numberOfUsers?c}'],
-            ['The most frequently changed file', '${model.mostChangableFile}'],
-            ['Total number of added lines', '${model.numberOfAddedLines?c}'],
-            ['Total number of removed lines', '${model.numberOfRemovedLines?c}'],
-        ]);
-        drawTableChart(data, 'Contributors list', 'chart_div');
-    }
-
-    google.charts.setOnLoadCallback(prepareData);
-</script>
 <div class="app-body ">
 
     <div class="sidebar ">
@@ -67,12 +46,14 @@
         </nav>
     </div>
 
-    <div class="main">
+    <main class="main">
         <div class="container-fluid">
-            <div class="row"><h5>Statistic for project ${model.name}:</h5></div>
-            <div class="row" id="chart_div"></div>
+            <div class="animated fadeIn">
+                <div th:replace="${template}" />
+                <div th:replace="${content}" />
+            </div>
         </div>
-    </div>
+    </main>
 </div>
 
 <footer class="app-footer ">

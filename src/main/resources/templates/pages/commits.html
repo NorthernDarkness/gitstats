@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::script}, ~{::div})}">
+<body>
+<script type="text/javascript" th:fragment="script" th:inline="javascript">
+    google.load("visualization", "1", {packages: ["corechart"]});
+
+    function doStats() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '[[${column1}]]}');
+        data.addColumn('number', '[[${column2}]]}');
+        data.addColumn({type: 'number', role: 'annotation'});
+
+        data.addRows(/*[[${commitsModels}]]*/);
+        drawChart(data, 'Total number of commits', 'chart_div');
+    }
+
+    function doAvg() {
+        var data2 = new google.visualization.DataTable();
+        data2.addColumn('string', '[[${avgCol1}]]}');
+        data2.addColumn('number', '[[${avgCol2}]]}');
+        data2.addColumn({type: 'number', role: 'annotation'});
+        data2.addRows(/*[[${averageCommitsModels}]]*/);
+//        data2.addRows([
+//            <#list
+//        averageCommitsModels as averageCommitsModel >
+//        ['${averageCommitsModel.email}', ${averageCommitsModel.averageCommitsPerMonth?c}, ${averageCommitsModel.averageCommitsPerMonth?c}],
+//    <
+//        /#list>]);
+        drawChart(data2, 'Average number of commits per month', 'avg_chart_div');
+    }
+
+    google.charts.setOnLoadCallback(doStats);
+    google.charts.setOnLoadCallback(doAvg);
+
+</script>
+<div class="row">
+    <div class="col-6" , id="chart_div"></div>
+    <div class="col-6" , id="avg_chart_div"></div>
+</div><!-- /.row -->
+</body>
+</html>

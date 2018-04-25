@@ -2,11 +2,8 @@ package ru.gitstats.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.gitstats.business.model.AverageCommitsPerMonthModel;
 import ru.gitstats.business.model.CommitsModel;
 import ru.gitstats.business.model.ProjectViewModel;
-import ru.gitstats.model.Change;
 import ru.gitstats.model.Commit;
 //import ru.gitstats.model.File;
 //import ru.gitstats.repository.ChangeRepositoryCustom;
@@ -18,7 +15,6 @@ import ru.gitstats.repository.UserRepository;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class CommitService implements ICommitService {
@@ -38,20 +34,22 @@ public class CommitService implements ICommitService {
     @Autowired
     private ChangeRepository changeRepository;
 
-    public List<CommitsModel> getCommitsModel() {
-        return commitRepository.findAllCountGroupByEmail();
+    public List<Object[]> getCommitsModel() {
+        List<CommitsModel> models =  commitRepository.findAllCountGroupByEmail();
+        List<Object[]> result = new ArrayList<>();
+        for (CommitsModel model : models) {
+            result.add(new Object[] {model.getEmail(), model.getCount(), model.getCount()});
+        }
+        return result;
     }
 
-    public List<AverageCommitsPerMonthModel> getAverageCommitsModel() {
+    public List<Object[]> getAverageCommitsModel() {
         List<Object[]> rowData = commitRepository.findAverageCountGroupByEmail();
-        List<AverageCommitsPerMonthModel> list = new ArrayList<>();
+        List<Object[]> result = new ArrayList<>();
         for (Object[] r : rowData) {
-            final Double res = r[1] == null ? 0.0 : ((BigDecimal) r[1]).doubleValue();
-            AverageCommitsPerMonthModel averageCommitsPerMonthModel
-                    = new AverageCommitsPerMonthModel((String) r[0], res);
-            list.add(averageCommitsPerMonthModel);
+            result.add(new Object[] {r[0], r[1], r[1]});
         }
-        return list;
+        return result;
     }
 
 //    @Transactional

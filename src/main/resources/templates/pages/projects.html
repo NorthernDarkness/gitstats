@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::script}, ~{::div})}">
 <body>
 <script type="text/javascript" th:fragment="script" th:inline="javascript">
     google.load("visualization", "1", {packages: ['controls', 'corechart', 'table']});
@@ -22,5 +23,8 @@
 
     google.charts.setOnLoadCallback(prepareData);
 </script>
+<div class="row" >
+    <div class="col-6" id="chart_div"></div>
+</div>
 </body>
 </html>
